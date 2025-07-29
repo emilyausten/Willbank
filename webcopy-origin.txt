@@ -1,0 +1,84 @@
+Uri: https://cdn.tailwindcss.com/3.4.17
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\3.4-3.17
+Content Type: text/javascript
+
+Uri: https://cdn.utmify.com.br/scripts/utms/latest.js
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\scripts\utms\latest-3.js
+Content Type: text/javascript
+
+Uri: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtF4d5voZs-uursQomBUaKsPkTw8evy5PwsA&s
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\images-3
+Content Type: image/png
+
+Uri: https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\css2-3
+Content Type: text/css
+
+Uri: https://fonts.gstatic.com/s/poppins/v23/pxiByp8kv8JHgFVrLCz7V1s.ttf
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\s\poppins\v23\pxiByp8kv8JHgFVrLCz7V1s-3.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/poppins/v23/pxiByp8kv8JHgFVrLEj6V1s.ttf
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\s\poppins\v23\pxiByp8kv8JHgFVrLEj6V1s-3.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/poppins/v23/pxiByp8kv8JHgFVrLGT9V1s.ttf
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\s\poppins\v23\pxiByp8kv8JHgFVrLGT9V1s-3.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/poppins/v23/pxiEyp8kv8JHgFVrFJA.ttf
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\s\poppins\v23\pxiEyp8kv8JHgFVrFJA-3.ttf
+Content Type: font/ttf
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/css/all.min.css
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\css\all.min.css
+Content Type: text/css
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/fonts/fa-brands-400.ttf
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\fonts\fa-brands-400.ttf
+Content Type: font/ttf
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/fonts/fa-brands-400.woff2
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\fonts\fa-brands-400.woff2
+Content Type: font/woff2
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/fonts/fa-regular-400.ttf
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\fonts\fa-regular-400.ttf
+Content Type: font/ttf
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/fonts/fa-regular-400.woff2
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\fonts\fa-regular-400.woff2
+Content Type: font/woff2
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/fonts/fa-solid-900.ttf
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\fonts\fa-solid-900.ttf
+Content Type: font/ttf
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/fonts/fa-solid-900.woff2
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\fonts\fa-solid-900.woff2
+Content Type: font/woff2
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/fonts/fa-v4compatibility.ttf
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\fonts\fa-v4compatibility.ttf
+Content Type: font/ttf
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/fonts/fa-v4compatibility.woff2
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\fonts\fa-v4compatibility.woff2
+Content Type: font/woff2
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/index.html?utm_source=FB&utm_campaign=CAMPANHA+13+%28CBO%29+-+ct+nova|120228895877460030&utm_medium=CONJUNTO+13+%28CBO%29+-+ct+nova|120228895877310030&utm_content=CTV+13+%28CBO%29+-+ct+nova|120228895877530030&utm_term=Instagram_Stories&vVH4C58UKq=GnSzP7yHot&utm_id=120228895877460030&fbclid=PAQ0xDSwL095hleHRuA2FlbQEwAGFkaWQBqyOLsSRCvgGnGVXywRbZihsAJ7C3RB0ejgOcT0HKmviO4a0OR7uw-vNBAVWgruF5OaCXiPE_aem_R_ftUmtDvS547QjgTpxWbw&cpf=70387430660&nome=Yuri+Silva&numero=23123123123
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\index.html
+Content Type: text/html
+
+Uri: https://will.limitedisponivel.site/chat/pagamento/video.mov
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\pagamento\video.mov
+Content Type: video/quicktime
+
+&cpf=70387430660
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\chat\index.html
+Content Type: text/html
+
+/will.limitedisponivel.site/js/page-handler.js
+File Name: C:\Downloaded Web Sites\will.limitedisponivel.site\js\page-handler.js
+Content Type: text/javascript
+

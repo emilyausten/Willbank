@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento Aprovado | WillBank</title>
+    <script src="../../3.4.17"></script>
+    <link rel="stylesheet" href="../../css/all.min.css">
+    <link href="../../css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        shopee: {
+                            light: "#cab600",
+                            DEFAULT: "#f5d317",
+                            dark: "#ffd900",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .success-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .success-icon {
+            animation: successBounce 0.8s ease-in-out;
+        }
+        
+        @keyframes successBounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f5d317;
+            animation: confetti-fall 3s linear infinite;
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #f5d317 0%, #cab600 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 211, 23, 0.3);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 relative overflow-hidden">
+    <!-- Confetti Animation -->
+    <div id="confettiContainer"></div>
+    
+    <div class="success-container max-w-md w-full rounded-2xl shadow-2xl p-8 text-center">
+        <!-- Ícone de Sucesso -->
+        <div class="mb-6">
+            <div class="success-icon inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
+                <i class="fas fa-check text-4xl text-green-600"></i>
+            </div>
+        </div>
+
+        <!-- Título -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">
+            Pagamento Aprovado!
+        </h1>
+
+        <!-- Mensagem -->
+        <p class="text-gray-600 mb-8">
+            Seu pagamento foi processado com sucesso. Seu empréstimo será liberado em breve.
+        </p>
+
+        <!-- Informações do Pedido -->
+        <div class="bg-gray-50 rounded-xl p-6 mb-8">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Detalhes da Transação</h2>
+            <div class="space-y-3 text-left">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Valor Aprovado:</span>
+                    <span class="font-bold text-xl text-shopee" id="valorAprovado">R$ 7.584,00</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Taxa Paga:</span>
+                    <span class="font-semibold text-gray-800">R$ 20,63</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Status:</span>
+                    <span class="font-semibold text-green-600">Aprovado</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Data:</span>
+                    <span class="font-semibold text-gray-800" id="dataTransacao"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Próximos Passos -->
+        <div class="bg-blue-50 rounded-xl p-6 mb-8">
+            <h3 class="text-lg font-semibold text-blue-800 mb-3">Próximos Passos</h3>
+            <div class="space-y-3 text-left">
+                <div class="flex items-start">
+                    <div class="bg-blue-100 rounded-full p-1 mr-3 mt-1">
+                        <i class="fas fa-clock text-blue-600 text-xs"></i>
+                    </div>
+                    <span class="text-sm text-blue-700">Seu dinheiro será transferido em até 2 horas úteis</span>
+                </div>
+                <div class="flex items-start">
+                    <div class="bg-blue-100 rounded-full p-1 mr-3 mt-1">
+                        <i class="fas fa-envelope text-blue-600 text-xs"></i>
+                    </div>
+                    <span class="text-sm text-blue-700">Você receberá um e-mail de confirmação</span>
+                </div>
+                <div class="flex items-start">
+                    <div class="bg-blue-100 rounded-full p-1 mr-3 mt-1">
+                        <i class="fas fa-mobile-alt text-blue-600 text-xs"></i>
+                    </div>
+                    <span class="text-sm text-blue-700">SMS será enviado quando o valor for creditado</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="space-y-4">
+            <button onclick="window.location.href='../../'" 
+                    class="btn-primary w-full text-white text-lg font-bold py-4 rounded-xl">
+                <i class="fas fa-home mr-2"></i>
+                Voltar ao Início
+            </button>
+            
+            <button onclick="compartilhar()" 
+                    class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-lg font-bold py-4 rounded-xl transition-all">
+                <i class="fas fa-share-alt mr-2"></i>
+                Compartilhar
+            </button>
+        </div>
+
+        <!-- Informações de Contato -->
+        <div class="mt-8 pt-6 border-t border-gray-200">
+            <p class="text-sm text-gray-600 mb-2">Precisa de ajuda?</p>
+            <div class="flex items-center justify-center space-x-4 text-sm">
+                <a href="tel:0800-123-4567" class="text-shopee hover:underline">
+                    <i class="fas fa-phone mr-1"></i>
+                    0800-123-4567
+                </a>
+                <a href="mailto:suporte@willbank.com" class="text-shopee hover:underline">
+                    <i class="fas fa-envelope mr-1"></i>
+                    suporte@willbank.com
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carregar valor aprovado do localStorage
+            const valorAprovado = localStorage.getItem('creditoAprovado') || '7.584,00';
+            document.getElementById('valorAprovado').textContent = 'R$ ' + valorAprovado;
+
+            // Definir data da transação
+            const hoje = new Date();
+            const dataFormatada = hoje.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('dataTransacao').textContent = dataFormatada;
+
+            // Criar confetti
+            criarConfetti();
+        });
+
+        function criarConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const cores = ['#f5d317', '#28a745', '#007bff', '#dc3545', '#ffc107'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    container.appendChild(confetti);
+                    
+                    // Remover confetti após animação
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        function compartilhar() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'WillBank - Empréstimo Aprovado!',
+                    text: 'Acabei de conseguir meu empréstimo na WillBank! Processo super rápido e seguro.',
+                    url: window.location.origin
+                });
+            } else {
+                // Fallback para navegadores que não suportam Web Share API
+                const url = window.location.origin;
+                const text = 'Acabei de conseguir meu empréstimo na WillBank! Processo super rápido e seguro.';
+                const shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+                window.open(shareUrl, '_blank');
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,55 @@
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos de IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+pix_webhook.log
+sms.log
+
+# Arquivos temporários do webhook
+status_*.json
+
+# Arquivos de configuração sensíveis
+.env
+config.php
+database.php
+
+# Cache
+cache/
+tmp/
+
+# Arquivos de backup
+*.bak
+*.backup
+*.old
+
+# Arquivos de upload (se houver)
+uploads/
+temp/
+
+# Dependências (se usar npm/yarn)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Arquivos de build
+dist/
+build/
+
+# Arquivos de teste
+tests/
+test/
+__tests__/
+
+# Arquivos de documentação temporários
+docs/temp/
+*.md.bak 
